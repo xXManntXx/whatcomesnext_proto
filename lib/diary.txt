@@ -1,0 +1,16 @@
+_______________
+Fichier créé pour nous aider dans notre développement à deux ;)
+
+
+__________
+BONNES PRATIQUES :
+- utiliser au maximum des named arguments dans nos fonctions.
+    -> Void maFonction ({type1 argument1, type2 argument2}) {}
+    -> en mettant les paramètres entre {} donc
+- toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au reformatage
+- lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsque l'initialise pas
+
+__________
+PROTIPS :
+- Ctrl + Space : dans les paramètres d'une fonction pour afficher les "named argument"
+- Ctrl + Alt (+ Maj) + L : Formater le code pour qu'il soit beau automatiquement (dans tout le document)
