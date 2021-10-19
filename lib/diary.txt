@@ -14,3 +14,4 @@ __________
 PROTIPS :
 - Ctrl + Space : dans les paramètres d'une fonction pour afficher les "named argument"
 - Ctrl + Alt (+ Maj) + L : Formater le code pour qu'il soit beau automatiquement (dans tout le document)
+- Ctrl + J pour créer des Widgets à partir de modèles

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:whatcomesnext_proto/timer.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -26,35 +28,33 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   var _counter = 0;
-  final _timer = Stopwatch();
-  var _timerState = false;
+  AnimationController? _timerController;
+  final gameDuration = 40;
 
+  @override
+  void dispose() {
+    _timerController!.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _timerController = AnimationController(
+        vsync: this,
+        // Modify this value to modify game duration
+        duration: Duration(
+          seconds: gameDuration,
+        ));
+  }
 
   void _incrementCounter() {
     setState(() {
       _counter++;
       _counter++;
-
-      if(_counter%10==0)
-        {
-          _stopTimer();
-        }
-    });
-  }
-
-  void _startTimer() {
-    setState(() {
-      _timer.start();
-      _timerState = true;
-    });
-  }
-
-  void _stopTimer() {
-    setState(() {
-      _timer.stop();
-      _timerState = false;
     });
   }
 
@@ -76,10 +76,16 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             ElevatedButton(
-              onPressed: _timerState ? null : _startTimer,
-              child: const Text('Start'),
+              onPressed: _timerController!.isAnimating ? _timerController!.stop : _timerController!.forward,
+              child: Text(_timerController!.isAnimating ? 'Stop' : 'Start'), //TODO faire en sorte que le bouton se mette à jour tout seul
             ),
-            Text("En attente d'implémentation."), //TODO faire en sorte que ça affiche dynamiquement le temps en seconde
+            Timer(
+              animation: StepTween(
+                begin: 0,
+                end: gameDuration,
+              ).animate(_timerController!),
+            ),
+            // TODO faire en sorte que ça réagisse à un moment particulier pour l'arréter
           ],
         ),
       ),
