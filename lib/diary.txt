@@ -4,12 +4,20 @@ Fichier créé pour nous aider dans notre développement à deux ;)
 
 __________
 BONNES PRATIQUES :
+- toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au formatage
+
+- ranger les screens dans le dossier associé, faire un fichier par screen que l'on vient appeler dans l'argument "body" du materialApp de  main
+- ranger les fonts/images/etc dans les dossiers associés, liés le tout via le pubsec.yaml
+
+- lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsqu'on ne l'initialise pas
 - utiliser au maximum des named arguments dans nos fonctions.
     -> Void maFonction ({type1 argument1, type2 argument2}) {}
     -> en mettant les paramètres entre {} donc
-- toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au formatage
-- lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsqu'on ne l'initialise pas
-- ranger les screens dans le dossier associé, faire un fichier par screen que l'on vient appeler dans l'argument "body" du materialApp de  main
+- si une fonction ne fait qu'une seule chose, utiliser : maFonction() => ceQueJeFais;
+- lors d'un appel à une fonction, si celle-ci ne sert qu'à l'endroit précis où elle est appelé, faire une fonction muette :
+  marquer directement à l'endroit ou elle est appelé : () {//ce que doit faire la fonction}
+  peut être utilisé pour passer l'adresse d'une fonction "avec des arguments" : () => maFonction(mes arguments)
+
 
 __________
 PROTIPS :
@@ -17,19 +25,41 @@ PROTIPS :
 - Ctrl + Alt (+ Maj) + L : Formater le code pour qu'il soit beau automatiquement (dans tout le document)
 - Ctrl + J : pour créer des Widgets à partir de modèles
 - Alt + enter : sur les erreurs pour voir les propositions (créer Override methode, importer les paquets etc)
+- Ctrl + / : commenter/décommenter des lignes (utilise le pavé numérique ou réassigne via les paramètres)
 Tous les raccourcis claviers :
 https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf
+Pour créer les tiens : recherche Set Keymap
 
 __________
 USEFUL WIDGETS :
+- Scaffold : permet de structurer la page, d'utiliser des scollables widget et tout. A mettre dans body de MaterialApp
+
 - Container : Permet de placer d'autres widgets dans ses children
-- Text : pour insérer et formater du texte. Ressource : https://youtu.be/fDRtpjHfOuw
+- Rows/Column : Permet de mettre des widget en ligne/colonne dans ses children.
+- Expanded : Force son child a être visible sur l'écran (pour éviter les dépassements)
+- ListView : permet de créer des listes d'objets (petit nombre d'objets
+    ListTile : permet de créer un composant de la liste avec
+               un début (leading:) un titre (title:) un soustitre(subtitle) et une fin (trailing)
+               possibilité d'utiliser des icons
+
+- Text : pour insérer et formater du texte. Ressource pour ajouter des fonts : https://youtu.be/fDRtpjHfOuw
+    - TextStyle permet de stylisé le texte
+- Image : pour insérer des images. Nécessite un AssetImage qui donne le lien de l'image rangé dans le dossier.
+          Le lien doit être répertorié dans le pubsec.yaml.
+          Ressource pour ajouter des images : https://youtu.be/KvozLHxcxuE
+- Icons : permet d'ajouter des icones, moult sont fournie de base -> Icon(Icons.monIcone)
+
+- RaisedButton : permet de créer un bouton qui appelle une fonction.
+- AlertDialog : permet de faire des pops-up (implémentation : https://youtu.be/h2U7S-3_rPc?t=283 )
 
 
 _________
 USEFULL NAMED ARGUMENTS :
+/!\, certains sont spécifiques à leur widget
 - margin : distance entre chaque Widget
     - valeur : EdgeInsets.all(x) tous les côtés ont un margin de x
                EdgeInsets.only( right : x) le(s) côté(s) précisé(s) a(ont) un margin de x(y,z,...)
 - padding : distance interne entre le widget et ses bords
     - valeur : pareille que margin
+
+- onPressed : permet d'ajouter une fonction à appeler quand on appuie, ne donner que le pointeur vers la fonction (sans les parenthèses)
