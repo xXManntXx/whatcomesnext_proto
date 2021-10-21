@@ -7,11 +7,29 @@ BONNES PRATIQUES :
 - utiliser au maximum des named arguments dans nos fonctions.
     -> Void maFonction ({type1 argument1, type2 argument2}) {}
     -> en mettant les paramètres entre {} donc
-- toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au reformatage
-- lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsque l'initialise pas
+- toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au formatage
+- lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsqu'on ne l'initialise pas
+- ranger les screens dans le dossier associé, faire un fichier par screen que l'on vient appeler dans l'argument "body" du materialApp de  main
 
 __________
 PROTIPS :
 - Ctrl + Space : dans les paramètres d'une fonction pour afficher les "named argument"
 - Ctrl + Alt (+ Maj) + L : Formater le code pour qu'il soit beau automatiquement (dans tout le document)
-- Ctrl + J pour créer des Widgets à partir de modèles
+- Ctrl + J : pour créer des Widgets à partir de modèles
+- Alt + enter : sur les erreurs pour voir les propositions (créer Override methode, importer les paquets etc)
+Tous les raccourcis claviers :
+https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf
+
+__________
+USEFUL WIDGETS :
+- Container : Permet de placer d'autres widgets dans ses children
+- Text : pour insérer et formater du texte. Ressource : https://youtu.be/fDRtpjHfOuw
+
+
+_________
+USEFULL NAMED ARGUMENTS :
+- margin : distance entre chaque Widget
+    - valeur : EdgeInsets.all(x) tous les côtés ont un margin de x
+               EdgeInsets.only( right : x) le(s) côté(s) précisé(s) a(ont) un margin de x(y,z,...)
+- padding : distance interne entre le widget et ses bords
+    - valeur : pareille que margin
