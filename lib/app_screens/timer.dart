@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
-
 class Timer extends AnimatedWidget {
-  const Timer({ Key? key,   required this.animation}) : super(key: key, listenable: animation);
+  const Timer({Key? key, required this.animation})
+      : super(key: key, listenable: animation);
   final Animation<int> animation;
 
   @override
@@ -16,9 +15,7 @@ class Timer extends AnimatedWidget {
       timerText,
       style: TextStyle(
         fontSize: 110,
-        color: Theme
-            .of(context)
-            .primaryColor,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }

@@ -18,6 +18,9 @@ BONNES PRATIQUES :
   marquer directement à l'endroit ou elle est appelé : () {//ce que doit faire la fonction}
   peut être utilisé pour passer l'adresse d'une fonction "avec des arguments" : () => maFonction(mes arguments)
 
+- statefulWidget : syntaxe : (plus d'infos dans la section USEFUL WIDGETS)
+    class myStaFuWid extends StateFulWidget{@override State<StateFulWidget> createState(){}}
+    class _myStaFuWidState extends State<myStaFuWid> {}
 
 __________
 PROTIPS :
@@ -32,15 +35,34 @@ Pour créer les tiens : recherche Set Keymap
 
 __________
 USEFUL WIDGETS :
-- Scaffold : permet de structurer la page, d'utiliser des scollables widget et tout. A mettre dans body de MaterialApp
+StatelessWidget : un widget qui ne change pas quand l'utilisateur intéragit avec lui.
+                  doit override "build" methode et retourner un Widget
+                  statique
+StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
+                 doit override "createState" methoe de retourner un State
+                 nécessite de créer une autre classe State avec les choses qui changent,
+                    cette classe implémente la méthode "build" qui contient le corps de l'écran
+                 pour modifier l'affichage, il faut appeler la méthode setState()
+                 dynamique
+- Scaffold : permet de structurer la page, d'utiliser des scollables widget et tout. A mettre dans home de MaterialApp.
+    - Possède un named argument : floatingActionButton pour le widget éponyme.
+- SnackBar : permet d'afficher momentannément une petite bar en bas de l'écran
+    - pour l'afficher, la mettre dans une fonction qui la constuit puis la montre :
+      Scaffold.of(context).showSnackBar(mySnackBar);            (of permet de récupérer le contexte)
+    - action : SnackBarAction(label : myLabel, onPressed : myFunction).
+        Ce named argument permet de rajouter un bouton texte sur la snackbar avec une fonction liée
+    - > ressource : https://youtu.be/ElZSoFCYmtw?t=136
 
 - Container : Permet de placer d'autres widgets dans ses children
 - Rows/Column : Permet de mettre des widget en ligne/colonne dans ses children.
 - Expanded : Force son child a être visible sur l'écran (pour éviter les dépassements)
-- ListView : permet de créer des listes d'objets (petit nombre d'objets
-    ListTile : permet de créer un composant de la liste avec
+- ListView : permet de créer des listes d'objets
+    - ListTile : permet de créer un composant de la liste avec
                un début (leading:) un titre (title:) un soustitre(subtitle) et une fin (trailing)
                possibilité d'utiliser des icons
+    + Pour créer une longue liste générée automatiquement sans niquer la mémoire :
+        - Utiliser ListView.builder(itemBuilder : (context,...) { return ListTile (cf au dessus)}
+        -> ressources https://youtu.be/W-0eeS97xV4?t=36
 
 - Text : pour insérer et formater du texte. Ressource pour ajouter des fonts : https://youtu.be/fDRtpjHfOuw
     - TextStyle permet de stylisé le texte
@@ -63,3 +85,6 @@ USEFULL NAMED ARGUMENTS :
     - valeur : pareille que margin
 
 - onPressed : permet d'ajouter une fonction à appeler quand on appuie, ne donner que le pointeur vers la fonction (sans les parenthèses)
+- tooltip : permet d'afficher un message quand on appuie longtemps sur un élément (pour avoir plus d'infos)
+
+- child / children : permet d'intégrer un/des widget/s dans un autre widget parent
