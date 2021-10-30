@@ -1,13 +1,16 @@
 _______________
 Fichier créé pour nous aider dans notre développement à deux ;)
 
-
+On utilisera SQLite via le pluggin sqflite. cf pubspec.yaml
 __________
 BONNES PRATIQUES :
 - toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au formatage
+- utiliser "Ma variable vaut ${myvar}" plutôt que "ma variable vaut" + myvar.toString()
 
 - ranger les screens dans le dossier associé, faire un fichier par screen que l'on vient appeler dans l'argument "body" du materialApp de  main
 - ranger les fonts/images/etc dans les dossiers associés, liés le tout via le pubsec.yaml
+- ranger les modèles utilisés pour la bdd dans le dossier models
+- ranger les helpers utilisés pour la bdd dans le dossier utils
 
 - lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsqu'on ne l'initialise pas
 - utiliser au maximum des named arguments dans nos fonctions.
@@ -18,9 +21,19 @@ BONNES PRATIQUES :
   marquer directement à l'endroit ou elle est appelé : () {//ce que doit faire la fonction}
   peut être utilisé pour passer l'adresse d'une fonction "avec des arguments" : () => maFonction(mes arguments)
 
-- statefulWidget : syntaxe : (plus d'infos dans la section USEFUL WIDGETS)
-    class myStaFuWid extends StateFulWidget{@override State<StateFulWidget> createState(){}}
-    class _myStaFuWidState extends State<myStaFuWid> {}
+- utiliser des variables plutôt que des valeurs bruts.
+    - par exemple définir un "minimum padding"
+
+- inclure dans MaterialApp le named argument theme : ThemeData() pour définir une charte graphique globale pour l'application
+    dans ThemeData mettre des valeurs comme
+    -> primaryColor : Colors.indigo
+    -> brightness : Brightness.dark
+    -> etc
+    - utiliser ensuite ces valeurs pour styliser l'ensemble :
+        -> TextStyle : Theme.of(context).textTheme.title par exemple
+- utiliser des variables qui contiennent le style de tous les boutons/textes/etc de l'application
+  pour éviter de remarquer chaque chose et de devoir tout changer à chaque fois
+    - ressources : https://youtu.be/97nQgV1tgeY
 
 __________
 PROTIPS :
@@ -33,6 +46,44 @@ Tous les raccourcis claviers :
 https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf
 Pour créer les tiens : recherche Set Keymap
 
+- statefulWidget : syntaxe : (plus d'infos dans la section USEFUL WIDGETS)
+    class myStaFuWid extends StateFulWidget{@override State<StateFulWidget> createState(){}}
+    class _myStaFuWidState extends State<myStaFuWid> {}
+
+- inclure les Widgets qui risquent de dépasser dans un Expanded widget (plus de détail plus bas)
+- si une Column devient trop grande et que ça risque de dépasser de l'écran,
+  ou que l'on veut pouvoir scroll facilement
+  -> il faut la remplacer par une ListView (sans rien changer d'autre)
+- si l'on veut détecter des gestes de l'utilisateur, on wrap le widget concerné dans un GestureDetector
+
+- on ne peut pas utiliser des variables que l'on vient de déclarer directement dans une state.
+  pour cela, il faut le faire dans la fonction
+  @override void initState() { super.initState();
+  //déclarer ici les variables qui dépendent d'autres variables initiale}
+
+- un écran est appeler "Route" en flutter
+- pour naviguer entre les différents écrans, utiliser le Navigator.
+    - Navigator.push(context, MaterialPageRoute(builder : (context) { return mySecondScreen(//myVars);}));
+        permet de se déplacer vers une nouvelle page. Myvars correspond aux infos que je veux passer entre écrans
+    - Navigator.pop(context)
+        permet de revenir sur l'écran précédent
+
+- pour effectuer des tâches qui durent longtemps sans bloquer l'UI, utiliser la programmation asynchrone :
+    - présente dans le package 'dart:async'
+    - met en place le type Future<monType>, le modificateur de fonction void myFunc async{}
+      et le terme await qui attend qu'une opération soit faite avant de faire la suite, sans bloque l'UI
+        - possibilité d'utiliser "then" à la place
+    - ressource : https://youtu.be/g9Uk1Xou0m4
+
+- pour recevoir ou envoyer des données à la bdd, il faut utiliser des variables de type map (dictionnaire)
+    - var myMap = Map<keyType, varType>();
+        - utimiser dynamic comme varType si on utilise plusieurs types de données
+    - il faut faire une fonction toMap() qui transforme nos objets en map pour pouvoir les envoyer vers la bdd
+    - de même, il faut faire un constructeur qui prend en entrée un map
+- pour implémenter les fichiers helper de la bdd (qui permettront de dialoguer avec la bdd)
+    - ressources : https://youtu.be/zkxBSCig3zs ia trop de trucs
+      pour l'intégrer dans l'UI : https://youtu.be/xke5_yGL0uk
+
 __________
 USEFUL WIDGETS :
 StatelessWidget : un widget qui ne change pas quand l'utilisateur intéragit avec lui.
@@ -44,6 +95,10 @@ StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
                     cette classe implémente la méthode "build" qui contient le corps de l'écran
                  pour modifier l'affichage, il faut appeler la méthode setState()
                  dynamique
+
+- WillPopScope : permet de controller ce que le programme va faire quand l'utilisateur revient en arrière
+    - doit avoir comme child le scaffold (être le plus haut)
+    - doit implémenter le named argument -> onWillPop : () {//ce qui doit se passer quand on revient en arrière}
 - Scaffold : permet de structurer la page, d'utiliser des scollables widget et tout. A mettre dans home de MaterialApp.
     - Possède un named argument : floatingActionButton pour le widget éponyme.
 - SnackBar : permet d'afficher momentannément une petite bar en bas de l'écran
@@ -54,6 +109,11 @@ StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
     - > ressource : https://youtu.be/ElZSoFCYmtw?t=136
 
 - Container : Permet de placer d'autres widgets dans ses children
+- Form : permet de rajouter des conditions de validations
+    - délcarer une variable myFormKey = GlobalKey<FormState>(); à intégrer dans le form dans le named argument key :
+        cela permettra de retrouver des infos sur le form partout. De l'identifier de manière unique
+    - ressources : https://youtu.be/xiEYNzU4bDg?t=63
+- Padding : Permet de rajouter du padding à son child
 - Rows/Column : Permet de mettre des widget en ligne/colonne dans ses children.
 - Expanded : Force son child a être visible sur l'écran (pour éviter les dépassements)
 - ListView : permet de créer des listes d'objets
@@ -73,7 +133,19 @@ StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
 
 - RaisedButton : permet de créer un bouton qui appelle une fonction.
 - AlertDialog : permet de faire des pops-up (implémentation : https://youtu.be/h2U7S-3_rPc?t=283 )
-
+- TextField : permet de récupérer des entrées texte de l'utilisateur ->  named argument below
+            :  -> onSubmitted : (String UserInput) {myVar = userInput};   quand l'utilisateur dit ok
+               -> onChanged : (String UserInput) {myVar = userInput};     quand l'utilisateur écrit
+               -> controller : //utiliser ici un controller déclarer plus haut (de type TextEditingController)
+                    - celui-ci va permettre de récuperer des infos sur ce que l'user rentre
+                      par exemple monController.text renverra le texte marqué dans le TextField
+                    - un controller avertira l'application des changements
+- TextFormField : permet de rajouter des conditions de validations et des messages d'erreurs
+    - dans le named argument validator : (String value){//logique de validation; return "mon message d'erreur"}
+- DropdownButton<String> : bouton avec une liste de choix.
+                                       (implémentation : https://youtu.be/DvvnhRo0kHQ?t=33 )
+-GestureDetector : permet de rajouter des réactions aux gestes du user. prend un child qu'il englobe
+    - par exemple : onTap, onLongPress, onHorizontalDragStart, etc etc
 
 _________
 USEFULL NAMED ARGUMENTS :

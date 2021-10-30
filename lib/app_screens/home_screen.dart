@@ -25,7 +25,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    debugPrint('Animation controller créé');
 
     _timerController = AnimationController(
         vsync: this,
@@ -33,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         duration: Duration(
           seconds: gameDuration,
         ));
+    debugPrint('Animation controller created');
   }
 
   void _incrementCounter() {
