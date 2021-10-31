@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Timer extends AnimatedWidget {
-  const Timer({Key? key, required this.animation})
+class GameTimer extends AnimatedWidget {
+  const GameTimer({Key? key, required this.animation})
       : super(key: key, listenable: animation);
   final Animation<int> animation;
 
@@ -9,12 +9,12 @@ class Timer extends AnimatedWidget {
   build(BuildContext context) {
     Duration clockTimer = Duration(seconds: animation.value);
 
-    String timerText = '${clockTimer.inSeconds}';
+    String timerText = 'Année ${2020+clockTimer.inSeconds}';
 
     return Text(
       timerText,
       style: TextStyle(
-        fontSize: 110,
+        fontSize: 40,
         color: Theme.of(context).primaryColor,
       ),
     );
