@@ -41,6 +41,7 @@ PROTIPS :
 - Ctrl + Alt (+ Maj) + L : Formater le code pour qu'il soit beau automatiquement (dans tout le document)
 - Ctrl + J : pour créer des Widgets à partir de modèles
 - Alt + enter : sur les erreurs pour voir les propositions (créer Override methode, importer les paquets etc)
+- Alt + maj + entrer : rajouter automatiquement les dépendences liées à une erreur
 - Ctrl + / : commenter/décommenter des lignes (utilise le pavé numérique ou réassigne via les paramètres)
 Tous les raccourcis claviers :
 https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf

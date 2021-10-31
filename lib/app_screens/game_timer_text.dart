@@ -14,7 +14,7 @@ class GameTimer extends AnimatedWidget {
     return Text(
       timerText,
       style: TextStyle(
-        fontSize: 40,
+        fontSize: 30,
         color: Theme.of(context).primaryColor,
       ),
     );
