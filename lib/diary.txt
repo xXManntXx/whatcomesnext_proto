@@ -2,8 +2,9 @@ _______________
 Fichier créé pour nous aider dans notre développement à deux ;)
 
 On utilisera SQLite via le pluggin sqflite. cf pubspec.yaml
-__________
+____________________
 BONNES PRATIQUES :
+--------------------
 - toujours mettre une virgule de plus "inutile" à la fin des arguments pour aider au formatage
 - utiliser "Ma variable vaut ${myvar}" plutôt que "ma variable vaut" + myvar.toString()
 
@@ -13,6 +14,7 @@ BONNES PRATIQUES :
 - ranger les helpers utilisés pour la bdd dans le dossier utils
 
 - lors de la déclaration de variable, utiliser "var" lorsque l'on initialise avec une valeur et avec un type lorsqu'on ne l'initialise pas
+    - utiliser dynamic pour une variable dont le type peut changer
 - utiliser au maximum des named arguments dans nos fonctions.
     -> Void maFonction ({type1 argument1, type2 argument2}) {}
     -> en mettant les paramètres entre {} donc
@@ -37,6 +39,7 @@ BONNES PRATIQUES :
 
 __________
 PROTIPS :
+----------
 - Ctrl + Space : dans les paramètres d'une fonction pour afficher les "named argument"
 - Ctrl + Alt (+ Maj) + L : Formater le code pour qu'il soit beau automatiquement (dans tout le document)
 - Ctrl + J : pour créer des Widgets à partir de modèles
@@ -75,6 +78,9 @@ Pour créer les tiens : recherche Set Keymap
       et le terme await qui attend qu'une opération soit faite avant de faire la suite, sans bloque l'UI
         - possibilité d'utiliser "then" à la place
     - ressource : https://youtu.be/g9Uk1Xou0m4
+    -> également possible d'envoyer des informations au compte goutte ou avec délais en utilisant
+    des streams et le mot clé yield/
+        -> https://youtu.be/8qDYxkTOC1M?t=90
 
 - pour recevoir ou envoyer des données à la bdd, il faut utiliser des variables de type map (dictionnaire)
     - var myMap = Map<keyType, varType>();
@@ -85,8 +91,26 @@ Pour créer les tiens : recherche Set Keymap
     - ressources : https://youtu.be/zkxBSCig3zs ia trop de trucs
       pour l'intégrer dans l'UI : https://youtu.be/xke5_yGL0uk
 
-__________
+- Function est un type utilisable. on peut mettre une fonction dans une variable et la manipuler
+    - on peut donc créer des fonctions qui retournent elle-même des fonctions
+
+- on peut formater la status bar et la navigation bar. cf : https://youtu.be/W3mIlNIimPM
+- pour adapter l'affichage en fonction de si c'est Android ou Ios on peut utiliser les Widget Cupertino pour IOs
+    - on peut tester la plateforme sur laquelle on est avec Platform.isAndroid
+- pour savoir si le téléphone est en portrait ou paysage, utiliser MediaQuery.orientation. MediaQuery.size pour ses dimensions
+
+- les mixins permettent de rajouter des fonctions à une classe C.
+    - Les classes qui hériteront de la classe C with monMixin auront en plus les fonctions mixins implémentés
+
+- intégrer un site web dans une app : https://youtu.be/J1TFogaiUqo
+
+- pour contrôler ou non l'affichage d'un widget on peut juste mettre une condition devant :
+    -> if(myCondition) myWidget(); Ne pas oublier de mettre un setState dans la fonction qui contrôle la valeur du booleen myCondition
+    -> possibilité d'utiliser le Widget Visibility sinon
+    Si on veut que le widget soit toujours là mais invisiblen on peut utiliser le widget Opacity et jouer sur l'opacité
+________________
 USEFUL WIDGETS :
+----------------
 StatelessWidget : un widget qui ne change pas quand l'utilisateur intéragit avec lui.
                   doit override "build" methode et retourner un Widget
                   statique
@@ -117,6 +141,8 @@ StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
 - Padding : Permet de rajouter du padding à son child
 - Rows/Column : Permet de mettre des widget en ligne/colonne dans ses children.
 - Expanded : Force son child a être visible sur l'écran (pour éviter les dépassements)
+- Flexible : permet de gérer la taille qu'il prend sur l'écran en fonction des autres
+    - pour Expanded ou Flexible -> argument flex : permet de gérer le "coef" de la taille qu'il va prendre par rapport aux autres
 - ListView : permet de créer des listes d'objets
     - ListTile : permet de créer un composant de la liste avec
                un début (leading:) un titre (title:) un soustitre(subtitle) et une fin (trailing)
@@ -127,6 +153,9 @@ StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
 
 - Text : pour insérer et formater du texte. Ressource pour ajouter des fonts : https://youtu.be/fDRtpjHfOuw
     - TextStyle permet de stylisé le texte
+    - Utiliser RichText pour avoir un texte ayant différentes caractéristiques en son sein
+        - chaque morceau de texte sera un TextSpan
+   - Utiliser SelectableText. (et Selectable.rich si on veut faire un RichText séléctionnable)
 - Image : pour insérer des images. Nécessite un AssetImage qui donne le lien de l'image rangé dans le dossier.
           Le lien doit être répertorié dans le pubsec.yaml.
           Ressource pour ajouter des images : https://youtu.be/KvozLHxcxuE
@@ -148,8 +177,9 @@ StatefulWidget : un widget qui change l'affichage quand on interagit avec lui
 -GestureDetector : permet de rajouter des réactions aux gestes du user. prend un child qu'il englobe
     - par exemple : onTap, onLongPress, onHorizontalDragStart, etc etc
 
-_________
+_________________________
 USEFULL NAMED ARGUMENTS :
+-------------------------
 /!\, certains sont spécifiques à leur widget
 - margin : distance entre chaque Widget
     - valeur : EdgeInsets.all(x) tous les côtés ont un margin de x

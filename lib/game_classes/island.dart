@@ -1,7 +1,9 @@
-import 'package:whatcomesnext_proto/game_classes/actor.dart';
+import 'package:whatcomesnext_proto/game_classes/actors/actor.dart';
+import 'package:whatcomesnext_proto/game_classes/actors/test_actor.dart';
+import 'package:whatcomesnext_proto/game_classes/laws/test_law.dart';
 import 'package:whatcomesnext_proto/game_classes/population.dart';
 
-import 'law.dart';
+import 'laws/law.dart';
 
 class Island {
   final String _islandName;
@@ -18,8 +20,8 @@ class Island {
           baseAwareness: 0.0,
           basePubOpinion: 0.0,
         ) {
-    islandLaws.add(Law.testLaw());
-    islandActors.add(Actor.testActor());
+    islandLaws.add(TestLaw());
+    islandActors.add(TestActor());
   }
 
 // getter and setter
