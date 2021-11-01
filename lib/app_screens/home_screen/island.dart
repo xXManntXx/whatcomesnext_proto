@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../law_screen/law.dart';
 
 class Island {
@@ -14,17 +12,5 @@ class Island {
       : islandName = "Mon île test",
         islandBudget = 1000 {
     islandLaws.add(Law.testLaw());
-  }
-
-  Widget getLawListView() {
-    var lawListView = ListView.builder(
-        itemCount: islandLaws.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(islandLaws[index].lawName),
-            subtitle: Text(islandLaws[index].lawContent),
-          );
-        });
-    return lawListView;
   }
 }

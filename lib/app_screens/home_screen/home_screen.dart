@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   void navigateToLawScreen(Island myIsland) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return LawScreen(myIsland: playerIsland,myAppBar: myAppbar!,); //TODO conserver la même appBar
+      return LawScreen(myIsland: playerIsland,);
     }));
   }
 }
