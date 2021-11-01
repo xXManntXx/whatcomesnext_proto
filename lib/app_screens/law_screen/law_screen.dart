@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatcomesnext_proto/app_screens/home_screen/island.dart';
+import 'package:whatcomesnext_proto/game_classes/island.dart';
 
 class LawScreen extends StatefulWidget {
   Island myIsland;
@@ -20,7 +20,7 @@ class _LawScreenState extends State<LawScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Budget actuel : ${myIsland.islandBudget} €",
+          "Budget actuel : ${myIsland.budget} €",
           style: const TextStyle(
             fontSize: 20,
           ),
@@ -31,21 +31,27 @@ class _LawScreenState extends State<LawScreen> {
       ),
     );
   }
+
   Widget getLawListView(Island playerIsland) {
     var lawListView = ListView.builder(
         itemCount: playerIsland.islandLaws.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(playerIsland.islandLaws[index].lawName),
-            subtitle: Text(playerIsland.islandLaws[index].lawContent),
-            trailing: Text("${playerIsland.islandLaws[index].lawPrice} €"),
-            onTap: playerIsland.islandLaws[index].isPassed ? null : () {
-              setState(() {
-                playerIsland.islandLaws[index].passLaw(playerIsland);
-              });
-              debugPrint("${playerIsland.islandLaws[index].lawName} tapped !"
-                  "Budget restant : $playerIsland.islandBudget");
-            },
+            title: Text(playerIsland.islandLaws[index].name),
+            subtitle: Text(playerIsland.islandLaws[index].content),
+            trailing: playerIsland.islandLaws[index].isPassed
+                ? Text("")
+                : Text("${playerIsland.islandLaws[index].price} €"),
+            onTap: playerIsland.islandLaws[index].isPassed
+                ? null
+                : () {
+                    setState(() {
+                      playerIsland.islandLaws[index].passLaw(playerIsland);
+                    });
+                    debugPrint(
+                        "${playerIsland.islandLaws[index].name} tapped !"
+                        "Budget restant : $playerIsland.islandBudget");
+                  },
           );
         });
     return lawListView;

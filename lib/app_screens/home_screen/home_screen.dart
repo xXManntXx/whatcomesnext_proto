@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:whatcomesnext_proto/app_screens/home_screen/island.dart';
+import 'package:whatcomesnext_proto/game_classes/island.dart';
 import 'package:whatcomesnext_proto/app_screens/law_screen/law_screen.dart';
 
-import '../complete_appbar_widget.dart';
+import 'complete_appbar_widget.dart';
 
 class MyHomePage extends StatefulWidget{
   const MyHomePage({Key? key, required this.title}) : super(key: key);

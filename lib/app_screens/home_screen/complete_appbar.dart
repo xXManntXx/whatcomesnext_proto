@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'game_timer_text.dart';
-import 'home_screen/island.dart';
-import 'mycolor_theme.dart';
+import '../../game_classes/island.dart';
+import '../mycolor_theme.dart';
 
 class CompleteAppbar extends StatefulWidget {
   CompleteAppbar({ required this.myIsland, Key? key}) : super(key: key);
@@ -23,8 +23,10 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
   AnimationController? _timerController;
   final gameDuration = 40;
   final archipelagoCounsilDelay = 10;
+  final gameMajDelay = 1;
   var timerText = "Lancer la partie";
   Timer? archipelagoCounsilTimer;
+  Timer? gameMajTimer;
 
   //is executed at the beginning
   @override
@@ -37,6 +39,7 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
         duration: Duration(
           seconds: gameDuration,
         ));
+
   }
 
   //is executed when the object is destroyed. Avoid memory-leek
@@ -44,23 +47,32 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
   void dispose() {
     _timerController!.dispose();
     archipelagoCounsilTimer!.cancel();
+    gameMajTimer!.cancel();
     super.dispose();
   }
 
   //timer functions
   void timerStart() {
     _timerController!.forward();
+
+    // Modifiy this value to modify archipelago counsil delay
     archipelagoCounsilTimer = Timer.periodic(
         Duration(seconds: archipelagoCounsilDelay, milliseconds: 100),
             (Timer t) => timerStop());
     setState(() {
       timerText = "Jeu en cours.";
     });
+
+    // Modify this value to modify the update delay
+    gameMajTimer = Timer.periodic(
+        Duration(seconds: gameMajDelay, milliseconds: 100),
+            (Timer t) => majGame());
   }
 
   void timerStop() {
     _timerController!.stop();
     archipelagoCounsilTimer!.cancel();
+    gameMajTimer!.cancel();
     setState(() {
       timerText = "Lancer la partie";
     });
@@ -88,7 +100,7 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
       ],
       bottom: PreferredSize(
         child: Text(
-          "Budget actuel : ${myIsland.islandBudget} €",
+          "Budget actuel : ${myIsland.budget} €",
           style: const TextStyle(
             fontSize: 20,
           ),
@@ -96,5 +108,9 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
         preferredSize: Size.fromHeight(25.0),
       ),
     );
+  }
+
+  void majGame(){
+    debugPrint("Game updated");
   }
 }
