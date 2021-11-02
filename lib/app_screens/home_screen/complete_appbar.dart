@@ -1,80 +1,66 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:whatcomesnext_proto/game_classes/archipelago.dart';
 
 import 'game_timer_text.dart';
 import '../../game_classes/island.dart';
 import '../mycolor_theme.dart';
 
 class CompleteAppbar extends StatefulWidget {
-  CompleteAppbar({ required this.myIsland, Key? key}) : super(key: key);
+  CompleteAppbar({required this.world, required this.myIsland, Key? key})
+      : super(key: key);
 
   Island myIsland;
+  Archipelago world;
+
   @override
-  _CompleteAppbarState createState() => _CompleteAppbarState(myIsland);
+  _CompleteAppbarState createState() => _CompleteAppbarState(world, myIsland);
 }
 
-class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStateMixin {
+class _CompleteAppbarState extends State<CompleteAppbar>
+    with TickerProviderStateMixin {
+  _CompleteAppbarState(this.world, this.myIsland);
 
   Island myIsland;
-  _CompleteAppbarState(this.myIsland);
+  Archipelago world;
 
   //timer variable
-  AnimationController? _timerController;
-  final gameDuration = 40;
-  final archipelagoCounsilDelay = 10;
-  final gameMajDelay = 1;
-  var timerText = "Lancer la partie";
-  Timer? archipelagoCounsilTimer;
-  Timer? gameMajTimer;
+  final gameFinalYear = 2060;
+  final archipelCounsilDates = [2030, 2040, 2050];
+  String startGameButtonText = "Lancer la partie.";
+  final turnTime = Duration(seconds: 1);
+  bool isGameRunning = false;
+  Timer? turnTimer;
 
-  //is executed at the beginning
+  //is executed at the beginning once
+
   @override
   void initState() {
-    super.initState();
-    // Modify this value to modify archipelago consil delay
-    _timerController = AnimationController(
-        vsync: this,
-        // Modify this value to modify game duration
-        duration: Duration(
-          seconds: gameDuration,
-        ));
-
+    //TODO faire que si on construit l'appbar en running time, le timer soit lancé
   }
 
   //is executed when the object is destroyed. Avoid memory-leek
   @override
   void dispose() {
-    _timerController!.dispose();
-    archipelagoCounsilTimer!.cancel();
-    gameMajTimer!.cancel();
+    turnTimer!.cancel();
     super.dispose();
   }
 
   //timer functions
   void timerStart() {
-    _timerController!.forward();
-
-    // Modifiy this value to modify archipelago counsil delay
-    archipelagoCounsilTimer = Timer.periodic(
-        Duration(seconds: archipelagoCounsilDelay, milliseconds: 100),
-            (Timer t) => timerStop());
+    turnTimer = Timer.periodic(turnTime, (Timer t) => majGame());
     setState(() {
-      timerText = "Jeu en cours.";
+      isGameRunning = true;
+      startGameButtonText = "Partie en cours.";
     });
-
-    // Modify this value to modify the update delay
-    gameMajTimer = Timer.periodic(
-        Duration(seconds: gameMajDelay, milliseconds: 100),
-            (Timer t) => majGame());
   }
 
   void timerStop() {
-    _timerController!.stop();
-    archipelagoCounsilTimer!.cancel();
-    gameMajTimer!.cancel();
+    turnTimer!.cancel();
     setState(() {
-      timerText = "Lancer la partie";
+      isGameRunning = false;
+      startGameButtonText = "Lancer la partie.";
     });
   }
 
@@ -83,19 +69,17 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
     return AppBar(
       backgroundColor: Colors.indigoAccent,
       title: GameTimer(
-        animation: StepTween(
-          begin: 0,
-          end: gameDuration,
-        ).animate(_timerController!),
+        year: world.year,
       ),
       actions: [
         ElevatedButton(
           style: ButtonStyle(
             alignment: Alignment.centerLeft,
-            backgroundColor: MaterialStateProperty.resolveWith(MyColorTheme.getColor),
+            backgroundColor:
+                MaterialStateProperty.resolveWith(MyColorTheme.getColor),
           ),
-          onPressed: _timerController!.isAnimating ? null : timerStart,
-          child: Text(timerText),
+          onPressed: isGameRunning ? null : timerStart,
+          child: Text(startGameButtonText),
         ),
       ],
       bottom: PreferredSize(
@@ -110,7 +94,22 @@ class _CompleteAppbarState extends State<CompleteAppbar> with TickerProviderStat
     );
   }
 
-  void majGame(){
+  void majGame() {
     debugPrint("Game updated");
+    setState(() {
+      world.year += 1;
+      if(archipelCounsilDates.contains(world.year)){
+        //archipelago counsil
+        timerStop();
+      }
+      else if(world.year >= gameFinalYear){
+        //endgame
+        timerStop();
+        setState(() {
+          startGameButtonText = "Partie terminée !";
+        });
+      }
+      debugPrint("Année : ${world.year}");
+    });
   }
 }

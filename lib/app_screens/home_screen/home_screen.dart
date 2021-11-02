@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatcomesnext_proto/game_classes/archipelago.dart';
 
 import 'package:whatcomesnext_proto/game_classes/island.dart';
 import 'package:whatcomesnext_proto/app_screens/law_screen/law_screen.dart';
@@ -18,11 +19,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   //game variable
   var playerIsland = Island.testIsland();
+  var world = Archipelago();
 
   //is executed at the beginning
   @override
   void initState() {
-    myAppbar = CompAppbarWidget(myIsland: playerIsland);
+    world.add(playerIsland);
+    myAppbar = CompAppbarWidget(myWorld: world, myIsland: playerIsland);
+    debugPrint("---ARCHIPELAGO COMPLETED---");
   }
 
   //build
@@ -46,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   void navigateToLawScreen(Island myIsland) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return LawScreen(myIsland: playerIsland,);
+      return LawScreen(myWorld: world, myIsland: playerIsland,);
     }));
   }
 }

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GameTimer extends AnimatedWidget {
-  const GameTimer({Key? key, required this.animation})
-      : super(key: key, listenable: animation);
-  final Animation<int> animation;
+class GameTimer extends StatelessWidget {
+  GameTimer({Key? key, required this.year});
+  int year;
 
   @override
   build(BuildContext context) {
-    Duration clockTimer = Duration(seconds: animation.value);
 
-    String timerText = 'Année ${2020+clockTimer.inSeconds}';
+    String timerText = 'Année $year';
 
     return Text(
       timerText,
